@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas Pro | Fortes, Seguras e Memoráveis</title>
+    <meta name="description" content="Gerador de senhas e frases secretas criptograficamente seguras com cálculo de entropia, modo escuro e histórico.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Top Bar with Theme Toggle -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="icon-badge">
+                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Gerador de Senhas</h1>
+                    <p class="subtitle">Senhas militares e frases seguras em segundos</p>
+                </div>
+            </div>
+            <button id="themeToggle" class="theme-toggle-btn" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+                <svg id="themeIconSun" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="themeIconMoon" class="theme-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Mode Selector Tabs -->
+        <nav class="mode-tabs" role="tablist">
+            <button id="tabCharMode" class="tab-btn active" role="tab" aria-selected="true" aria-controls="charModeSection">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Senha Padrão
+            </button>
+            <button id="tabPassphraseMode" class="tab-btn" role="tab" aria-selected="false" aria-controls="passphraseModeSection">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Frase Memorável
+            </button>
+        </nav>
+
+        <!-- Password Display Output Box -->
+        <div class="password-box">
+            <div class="input-wrapper">
+                <input
+                    type="text"
+                    id="password"
+                    readonly
+                    placeholder="Sua senha aparecerá aqui"
+                    aria-label="Senha gerada"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+                <div class="input-actions">
+                    <button id="visibilityBtn" class="action-icon-btn" title="Mostrar/Ocultar senha" aria-label="Mostrar ou ocultar senha">
+                        <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg id="eyeOffIcon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                    </button>
+                    <button id="regenerateBtn" class="action-icon-btn" title="Regenerar senha" aria-label="Gerar nova senha">
+                        <svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    </button>
+                </div>
+            </div>
+            <button class="copy-btn" id="copyBtn" aria-label="Copiar senha gerada">
+                <svg id="copyIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="copyBtnText">Copiar</span>
+            </button>
+        </div>
+
+        <!-- Password Strength & Crack Time Info Card -->
+        <div class="strength-card">
+            <div class="strength-top">
+                <div class="strength-label-group">
+                    <span class="label-title">Nível de Segurança:</span>
+                    <span id="strengthText" class="strength-badge">—</span>
+                </div>
+                <div id="crackTimeBadge" class="crack-time-badge" title="Tempo estimado para quebrar por força bruta">
+                    ⏱️ <span id="crackTimeText">Calculando...</span>
+                </div>
+            </div>
+            <div class="strength-bar-track">
+                <div id="strengthProgress" class="strength-progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Mode 1: Character Options -->
+        <section id="charModeSection" class="options-section active" role="tabpanel">
+            <div class="length-control">
+                <div class="length-header">
+                    <span>Tamanho da senha</span>
+                    <span id="lengthValue" class="length-badge">16</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input
+                        type="range"
+                        id="length"
+                        min="6"
+                        max="48"
+                        value="16"
+                        aria-label="Tamanho da senha"
+                    >
+                </div>
+            </div>
+
+            <div class="options-grid">
+                <label class="checkbox">
+                    <input type="checkbox" id="uppercase" checked>
+                    <span class="custom-check"></span>
+                    <span>Letras maiúsculas <small class="char-sample">(A-Z)</small></span>
+                </label>
+
+                <label class="checkbox">
+                    <input type="checkbox" id="lowercase" checked>
+                    <span class="custom-check"></span>
+                    <span>Letras minúsculas <small class="char-sample">(a-z)</small></span>
+                </label>
+
+                <label class="checkbox">
+                    <input type="checkbox" id="numbers" checked>
+                    <span class="custom-check"></span>
+                    <span>Números <small class="char-sample">(0-9)</small></span>
+                </label>
+
+                <label class="checkbox">
+                    <input type="checkbox" id="symbols" checked>
+                    <span class="custom-check"></span>
+                    <span>Símbolos <small class="char-sample">(!@#$%&*)</small></span>
+                </label>
+
+                <label class="checkbox full-width highlight-option">
+                    <input type="checkbox" id="excludeAmbiguous">
+                    <span class="custom-check"></span>
+                    <span>Evitar semelhantes <small class="char-sample">(ex: 0/O, 1/l/I)</small></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Mode 2: Passphrase Options -->
+        <section id="passphraseModeSection" class="options-section hidden" role="tabpanel">
+            <div class="length-control">
+                <div class="length-header">
+                    <span>Quantidade de palavras</span>
+                    <span id="wordsCountValue" class="length-badge">4 palavras</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input
+                        type="range"
+                        id="wordsCount"
+                        min="3"
+                        max="7"
+                        value="4"
+                        aria-label="Quantidade de palavras"
+                    >
+                </div>
+            </div>
+
+            <div class="passphrase-options">
+                <div class="select-group">
+                    <label for="separatorSelect">Separador:</label>
+                    <select id="separatorSelect" class="styled-select">
+                        <option value="-">Hífen (-)</option>
+                        <option value="_">Underline (_)</option>
+                        <option value=".">Ponto (.)</option>
+                        <option value=" ">Espaço ( )</option>
+                        <option value="">Sem separador</option>
+                    </select>
+                </div>
+
+                <div class="options-grid">
+                    <label class="checkbox">
+                        <input type="checkbox" id="capitalizeWords" checked>
+                        <span class="custom-check"></span>
+                        <span>Capitalizar palavras</span>
+                    </label>
+
+                    <label class="checkbox">
+                        <input type="checkbox" id="includeNumberPassphrase" checked>
+                        <span class="custom-check"></span>
+                        <span>Incluir número</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Action Button -->
+        <button class="generate-btn" id="generateBtn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            Gerar nova senha
+        </button>
+
+        <!-- Recent Passwords History Drawer -->
+        <div class="history-container">
+            <button id="historyToggleBtn" class="history-toggle-btn" aria-expanded="false" aria-controls="historyList">
+                <span class="history-toggle-title">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Histórico recente (<span id="historyCount">0</span>)
+                </span>
+                <svg id="historyChevron" class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div id="historyList" class="history-list hidden">
+                <div class="history-header">
+                    <span class="history-sub">Salvas nesta sessão:</span>
+                    <button id="clearHistoryBtn" class="clear-history-btn">Limpar</button>
+                </div>
+                <div id="historyItems" class="history-items">
+                    <!-- History items will be inserted dynamically here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast / Status Message -->
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
