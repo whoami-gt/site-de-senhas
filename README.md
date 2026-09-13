@@ -2,6 +2,8 @@
 
 Aplicação web para criar senhas fortes e frases memoráveis diretamente no navegador.
 
+🌐 **Acesse agora:** https://site-de-senhas-swart.vercel.app/
+
 ## O que o projeto faz
 
 O gerador oferece dois modos de criação:
@@ -23,7 +25,7 @@ A aplicação também permite:
 
 ## Segurança
 
-A geração usa a API `window.crypto.getRandomValues()` do navegador para obter valores aleatórios criptograficamente seguros. As senhas são geradas no lado do cliente e não são enviadas para um servidor.
+A geração usa a API `window.crypto.getRandomValues()` do navegador para obter valores aleatórios criptograficamente seguros. As senhas são geradas no lado do cliente e não são enviadas para nenhum servidor.
 
 O histórico fica somente na memória da página e é perdido ao recarregar ou fechar a aba. Ainda assim, evite compartilhar senhas geradas e use um gerenciador de senhas para armazená-las com segurança.
 
@@ -31,11 +33,14 @@ A estimativa de tempo de quebra é informativa e depende das características da
 
 ## Como usar
 
-1. Abra o arquivo `index.html` em um navegador moderno.
+1. Acesse **https://site-de-senhas-swart.vercel.app/**
 2. Escolha o modo **Senha Padrão** ou **Frase Memorável**.
 3. Ajuste as opções desejadas.
 4. Clique em **Gerar nova senha**.
 5. Use o botão **Copiar** para copiar o resultado.
+
+Ou execute localmente:
+- Abra o arquivo `index.html` em um navegador moderno.
 
 O projeto é estático e não precisa de servidor ou instalação de dependências.
 
